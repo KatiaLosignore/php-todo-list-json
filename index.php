@@ -13,7 +13,7 @@
             <div class="container mt-5">
 
                 <ul class="list-group">
-                    <li v-for="todo in todoList" class="list-group-item"> {{ todo['text'] }} </li>
+                    <li v-for="todo in todoList" :class="{'text-decoration-line-through' : todo['done']}" class="list-group-item"> {{ todo['text'] }} </li>
                 </ul>
 
                 <input v-model="todoItem" type="text">
