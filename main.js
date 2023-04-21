@@ -1,32 +1,36 @@
 
-  const { createApp } = Vue
+  const { createApp } = Vue;
+  const apiUrl = 'http://localhost/php-todo-list-json/server.php';
 
   createApp({
     data() {
       return {
         todoList: [],
-        todoItem: ''
+        todoItem: {
+                    'text': '',
+                    'done': false
+                  }
       }
     },
     methods: {
         readList() {
-            axios.get('server.php')
-            .then(res => {
-                this.todoList = res.data;
+            axios.get(apiUrl)
+            .then(response => {
+                this.todoList = response.data;
             })
         },
         addTodo() {
             const data = {
-                item: {text: this.todoItem, done: false}
+                item: this.todoItem
             };
 
-            axios.post('server.php', data, 
+            axios.post(apiUrl, data, 
             {
-                headers: { 'Content-Type': 'multipart/form-data'}
+                headers: {'Content-Type': 'multipart/form-data'}
             }
-            ).then(res => {
-                this.todoList = res.data;
-                this.todoItem = '';
+            ).then(response => {
+                this.todoList = response.data;
+                this.todoItem.text = '';
             });
         }
     },
