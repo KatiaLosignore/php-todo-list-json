@@ -1,6 +1,6 @@
 
   const { createApp } = Vue;
-  const apiUrl = 'http://localhost/php-todo-list-json/server.php';
+  const apiUrl = 'server.php';
 
   createApp({
     data() {
@@ -8,7 +8,8 @@
         todoList: [],
         todoItem: {
                     'text': '',
-                    'done': false
+                    'done': false,
+                    'id' : '',
                   }
       }
     },
@@ -30,7 +31,21 @@
             }
             ).then(response => {
                 this.todoList = response.data;
+                this.todoItem.id = '';
                 this.todoItem.text = '';
+            });
+        },
+        deleteTodo(id) {
+            const data = {
+                idToDelete: id
+            };
+
+            axios.post(apiUrl, data, 
+            {
+                headers: {'Content-Type': 'multipart/form-data'}
+            }
+            ).then(response => {
+                this.todoList = response.data;
             });
         }
     },
